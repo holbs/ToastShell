@@ -18,6 +18,6 @@ If ($KernelReboot[0].TimeCreated -ge (Get-Date).AddDays(-7)) {
 ## End User Experience
 The end user will see a prompt as below
 
-![ToastShell Example](https://github.com/holbs/ToastShell/blob/main/ExampleNotification.png)
+![ToastShell Example](https://github.com/holbs/ToastShell/blob/main/Images/ExampleNotification.png)
 
 If they select Restart, then Restart-Computer is ran and the workstation reboots. If they select Snooze nothing happens, however, if detection runs again at some point and it still does not return "The workstation has restarted in the last 7 days" they'll see the prompt again
