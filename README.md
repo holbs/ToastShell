@@ -5,6 +5,7 @@ A selection of PowerShell scripts that allow an administrator to prompt end user
   - ToastShell.cmd
   - ToastShell.ps1
   - ToastShellMain.ps1
+- Add an image file called ToastShell.png which will display within the notification
 - Set up an application that uses script detection to determine if the workstation has restarted in the last 7 days using the below code
 ```
 $KernelEvents = Get-WinEvent -ProviderName 'Microsoft-Windows-Kernel-Boot'

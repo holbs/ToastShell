@@ -44,6 +44,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -N
 New-Item -Path "$env:WINDIR\ToastShell" -ItemType Directory -Force
 Copy-Item -Path "$PSScriptRoot\ToastShell.cmd" -Destination "$env:WINDIR\ToastShell\ToastShell.cmd" -Force -Confirm:$false
 Copy-Item -Path "$PSScriptRoot\ToastShell.ps1" -Destination "$env:WINDIR\ToastShell\ToastShell.ps1" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\ToastShell.png" -Destination "$env:WINDIR\ToastShell\ToastShell.png" -Force -Confirm:$false
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here
@@ -54,15 +55,24 @@ $KernelReboot = $KernelEvents | Where-Object {$_.Id -eq 27 -and $_.Message -eq "
 $KernelUpTime = New-TimeSpan -Start $KernelReboot[0].TimeCreated -End (Get-Date)
 
 ##*=============================================
-##* ToastShell XML content used to design the notification. Edit as required. Snooze doesn't do anything and works as a dismiss. If the detection still fails the next time this runs the user will see the same popup
+##* Build the contents of the notification here
+##*=============================================
+
+$Title = "Restart Notification"
+$Body  = "Your computer has not been restarted for $($KernelUpTime.Days) days. Please complete a restart as soon as possible."
+$Image = "$env:WINDIR\ToastShell\ToastShell.png" # Ensure this path is correct. If it's not the notification will not display
+
+##*=============================================
+##* ToastShell XML content used to design the notification. Snooze doesn't do anything and works as a dismiss. If the detection still fails the next time this runs the user will see the same popup
 ##*=============================================
 
 $ToastXml = @"
 <toast>
     <visual>
         <binding template="ToastGeneric">
-            <text>Restart Notification</text>
-            <text>Your computer has not been restarted for $($KernelUpTime.Days) days. Please complete a restart as soon as possible.</text>
+            <text>$Title</text>
+            <text>$Body</text>
+            <image placement="applogooverride" hint-crop="circle" src="$Image" />
         </binding>
     </visual>
     <actions>
