@@ -72,7 +72,7 @@ $ToastXml = @"
         <binding template="ToastGeneric">
             <text>$Title</text>
             <text>$Body</text>
-            <image placement="applogooverride" hint-crop="circle" src="$Image" />
+            <image placement="applogooverride" src="$Image" />
         </binding>
     </visual>
     <actions>
