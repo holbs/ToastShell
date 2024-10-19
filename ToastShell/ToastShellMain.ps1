@@ -42,8 +42,8 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -N
 ##*=============================================
 
 New-Item -Path "$env:WINDIR\ToastShell" -ItemType Directory -Force
-Copy-Item -Path "$PSScriptHost\ToastShell.cmd" -Destination "$env:WINDIR\ToastShell\ToastShell.cmd" -Force -Confirm:$false
-Copy-Item -Path "$PSScriptHost\ToastShell.ps1" -Destination "$env:WINDIR\ToastShell\ToastShell.ps1" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\ToastShell.cmd" -Destination "$env:WINDIR\ToastShell\ToastShell.cmd" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\ToastShell.ps1" -Destination "$env:WINDIR\ToastShell\ToastShell.ps1" -Force -Confirm:$false
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here
