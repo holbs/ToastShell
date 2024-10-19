@@ -61,8 +61,8 @@ $ToastXml = @"
 <toast>
     <visual>
         <binding template="ToastGeneric">
-            <text>TEST Restart Notification</text>
-            <text>TEST Your computer has not been restarted for $($KernelUpTime.Days) days. Please complete a restart as soon as possible.</text>
+            <text>Restart Notification</text>
+            <text>Your computer has not been restarted for $($KernelUpTime.Days) days. Please complete a restart as soon as possible.</text>
         </binding>
     </visual>
     <actions>
