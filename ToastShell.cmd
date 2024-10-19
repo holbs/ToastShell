@@ -1,0 +1,1 @@
+%windir%\System32\WindowsPowerShell\v1.0\powershell.exe -WindowStyle hidden -ExecutionPolicy bypass -NoLogo -NoProfile -File "%~dp0ToastShell.ps1" "%*"
