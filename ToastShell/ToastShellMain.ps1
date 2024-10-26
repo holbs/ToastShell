@@ -1,5 +1,5 @@
 <#
-.DESCRIPTION
+.SYNOPSIS
     ToastShell is a tool that allows you to push prompts users to take an action from a Windows toast notification, and then run PowerShell commands or functions on a click event
 .EXAMPLE
     This example uses prompts the user to restart their computer by passing the cmdlet Restart-Computer through to the main execution script. Pair with a detection script in ConfigMgr or Intune to run on workstations with an uptime greater than 7 days
