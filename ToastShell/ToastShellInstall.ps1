@@ -35,9 +35,9 @@ New-Item "HKLM:\SOFTWARE\Classes\toastshell\shell\open" -Force
 New-Item "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell" -Name "(default)" -Value "URL:PowerShell Toast Notification Protocol" -Type String -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell" -Name "URL Protocol" -Value "" -Type String -Force
-New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\DefaultIcon" -Name "(default)" -Value "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe,1" -Type String -Force
+New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\DefaultIcon" -Name "(default)" -Value '%SystemRoot%\System32\WindowsPowerShell\v1.0\powershell.exe,1' -Type String -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell" -Name "(default)" -Value "open" -Type String -Force
-New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -Name "(default)" -Value "`"$env:WINDIR\ToastShell\ToastShell.cmd`" %1" -Type String -Force # This file is placed here by this installation script, and should be part of your installation source
+New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -Name "(default)" -Value '%SystemRoot%\ToastShell\ToastShell.cmd %1' -Type String -Force # This file is placed here by this installation script, and should be part of your installation source
 
 ##*=============================================
 ##* Create folders then copy ToastShell.cmd and ToastShell.ps1 to C:\WINDOWS\ToastShell
