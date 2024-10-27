@@ -15,7 +15,7 @@
 ##* Copy any custom scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
 ##*=============================================
 
-Copy-Item -Path "$PSScriptRoot\DownloadsCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\DownloadsCustomScripts.ps1" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\DownloadsCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\User\DownloadsCustomScripts.ps1" -Force -Confirm:$false
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here

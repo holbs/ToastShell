@@ -16,7 +16,7 @@
 ##* Copy any custom scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
 ##*=============================================
 
-Copy-Item -Path "$PSScriptRoot\ShutdownCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\ShutdownCustomScripts.ps1" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\ShutdownCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\User\ShutdownCustomScripts.ps1" -Force -Confirm:$false
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here
