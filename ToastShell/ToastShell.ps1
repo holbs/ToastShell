@@ -1,15 +1,9 @@
 ##*=============================================
-##* ToastShell main functions
+##* Import custom functions from $env:WINDIR\ToastShell\ToastShellCustomScripts
 ##*=============================================
 
-
-
-##*=============================================
-##* Add any custom functions here that can be called through the XML in ToastShellMain.ps1
-##*=============================================
-
-Function Test-Function {
-    # Your code here
+Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts" -Filter "*.ps1" | Foreach-Object {
+    . $($_.FullName)
 }
 
 ##*=============================================

@@ -1,24 +1,18 @@
 # ToastShell
-A selection of PowerShell scripts that allow an administrator to prompt end users to complete an action through a toast notification. These actions can then run PowerShell cmdlets or functions definied within the scripts. This example prompts an end user to restart their workstation if it has an uptime of 7+ days
+ToastShell is a set of scripts that allows you to push prompts users to take an action from a Windows toast notification, and then run PowerShell commands or functions on a click event
 ## Installation
-- Using Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool create a package that contains
+- Using Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy a package that contains
   - ToastShell.cmd
   - ToastShell.ps1
-  - ToastShellMain.ps1
-- Add an image file called ToastShell.png which will display within the notification
-- Set up an application that uses script detection to determine if the workstation has restarted in the last 7 days using the below code
-```
-$KernelEvents = Get-WinEvent -ProviderName 'Microsoft-Windows-Kernel-Boot'
-$KernelReboot = $KernelEvents | Where-Object {$_.Id -eq 27 -and $_.Message -eq "The boot type was 0x0."}
-If ($KernelReboot[0].TimeCreated -ge (Get-Date).AddDays(-7)) {
-    Return "The workstation has restarted in the last 7 days"
-    Exit 0
-}
-```
-- If the above does not return "The workstation has restarted in the last 7 days", the detection is failed, and ToastShellMain.ps1 can execute
+  - ToastShellInstall.cmd
+  - ToastShellInstall.ps1
+- Using Task Scheduler, Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy additional packages to use this framework to show notification. There are three examples in the Examples folder
+  - Restart, to prompt the user to restart their workstation if it has not restarted for 7 or more days
+  - Shutdown, to prompt the user to shutdown at a set time, with the option to cancel the shutdown if they are still working
+  - Downloads, to prompt the user to review the contents of their downloads folder if it has items older than 30 days in
 ## End User Experience
-The end user will see a prompt as below
+In the restart scenario the end user will see a prompt as below
 
-![ToastShell Example](https://github.com/holbs/ToastShell/blob/main/Images/ExampleNotification.png)
+![ToastShell Example](https://github.com/holbs/ToastShell/blob/main/ReadMeImages/ExampleNotification.png)
 
-If they select Restart, then Restart-Computer is ran and the workstation reboots. If they select Snooze nothing happens, however, if detection runs again at some point and it still does not return "The workstation has restarted in the last 7 days" they'll see the prompt again
+If they select Restart, then Restart-Computer is passed from through the toastshell:// URI to ToastShell.ps1 and executes and the workstation reboots. If they select Snooze nothing happens and nothing is ran, but the notification is dismissed
