@@ -28,11 +28,11 @@
 ##* Creation of toastshell:// URI by adding to the registry
 ##*=============================================
 
-New-Item "HKLM:\SOFTWARE\Classes\toastshell" -Force
-New-Item "HKLM:\SOFTWARE\Classes\toastshell\DefaultIcon" -Force
-New-Item "HKLM:\SOFTWARE\Classes\toastshell\shell" -Force
-New-Item "HKLM:\SOFTWARE\Classes\toastshell\shell\open" -Force
-New-Item "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -Force
+New-Item -Path "HKLM:\SOFTWARE\Classes\toastshell" -Force
+New-Item -Path "HKLM:\SOFTWARE\Classes\toastshell\DefaultIcon" -Force
+New-Item -Path "HKLM:\SOFTWARE\Classes\toastshell\shell" -Force
+New-Item -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open" -Force
+New-Item -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell" -Name "(default)" -Value "URL:PowerShell Toast Notification Protocol" -Type String -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell" -Name "URL Protocol" -Value "" -Type String -Force
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\DefaultIcon" -Name "(default)" -Value "$env:WINDIR\System32\WindowsPowerShell\v1.0\powershell.exe,1" -Type String -Force
