@@ -6,10 +6,12 @@ ToastShell is a set of scripts that allows you to push prompts users to take an 
   - ToastShell.ps1
   - ToastShellInstall.cmd
   - ToastShellInstall.ps1
-- Using Task Scheduler, Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy additional packages to use this framework to show notification. There are three examples in the Examples folder
-  - Restart, to prompt the user to restart their workstation if it has not restarted for 7 or more days
-  - Shutdown, to prompt the user to shutdown at a set time, with the option to cancel the shutdown if they are still working
-  - Downloads, to prompt the user to review the contents of their downloads folder if it has items older than 30 days in
+- Using Task Scheduler, Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy additional packages to use this framework to show a notification
+## Examples
+There are three examples in the Examples folder
+  - Restart, which prompts for a restart if the workstation has not restarted for 7 or more days
+  - Shutdown, which prompts for a shutdown at a set time, with a scheduled shutdown 30 minutes later if not met
+  - Downloads, which prompts for the Downloads folder content to be cleaned where content is aged
 ## End User Experience
 In the restart scenario the end user will see a prompt as below
 
