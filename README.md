@@ -4,9 +4,10 @@ ToastShell is a set of scripts that allows you to push prompts users to take an 
 - Using Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy a package that contains
   - ToastShell.cmd
   - ToastShell.ps1
+  - ToastShellFunctions.ps1
   - ToastShellInstall.cmd
   - ToastShellInstall.ps1
-- Using Task Scheduler, Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy additional packages to use this framework to show a notification
+- Using Task Scheduler, Microsoft Configuration Manager, Microsoft Intune, or another Remote Monitoring and Management tool deploy additional scripts to use this framework to show a notification
 ## Examples
 There are three examples in the Examples folder
   - Restart, which prompts for a restart if the workstation has not restarted for 7 or more days
