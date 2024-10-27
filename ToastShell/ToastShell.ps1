@@ -1,5 +1,5 @@
 ##*=============================================
-##* Import custom functions from $env:WINDIR\ToastShell\ToastShellCustomScripts
+##* Import custom scripts from $env:WINDIR\ToastShell\ToastShellCustomScripts
 ##*=============================================
 
 Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts" -Filter "*.ps1" | Foreach-Object {

@@ -1,8 +1,8 @@
 <#
 .DESCRIPTION
     Shutdown is used with ToastShell to show a toast notification prompt to the end user that their workstation has a scheduled shutdown in 30 minutes
-    * If the user hits Snooze, the scheduled shutdown job is stopped, by running Stop-Shutdown, which is part of ShutdownCustonFunctions.ps1
-    * If the user hits Shutdown, the scheduled shutdown job is stopped, and then shutdown.exe is used to shutdown the workstation, by running Start-Shutdown, which is part of ShutdownCustomFunctions.ps1
+    * If the user hits Snooze, the scheduled shutdown job is stopped, by running Stop-Shutdown, which is part of ShutdownCustomScripts.ps1
+    * If the user hits Shutdown, the scheduled shutdown job is stopped, and then shutdown.exe is used to shutdown the workstation, by running Start-Shutdown, which is part of ShutdownCustomScript.ps1
     * If the user does nothing, or if they have walked away from their workstation then the shutdown job continues to run for 30 minutes then shutdowns when the timer is reached
 .NOTES
     Author : Aran Holbrook
@@ -13,10 +13,10 @@
 #>
 
 ##*=============================================
-##* Copy any custom function scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
+##* Copy any custom scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
 ##*=============================================
 
-Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\ShutdownCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\ShutdownCustomScripts.ps1" -Force -Confirm:$false
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here
