@@ -40,10 +40,22 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell" -Name "(default
 New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -Name "(default)" -Value '%SystemRoot%\ToastShell\ToastShell.cmd %1' -Type String -Force # This file is placed here by this installation script, and should be part of your installation source
 
 ##*=============================================
-##* Create folders then copy ToastShell.cmd and ToastShell.ps1 to C:\WINDOWS\ToastShell
+##* Create ToastShell folder then copy ToastShell.cmd and ToastShell.ps1 to the folder
 ##*=============================================
 
 New-Item -Path "$env:WINDIR\ToastShell" -ItemType Directory -Force
-New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts" -ItemType Directory -Force
 Copy-Item -Path "$PSScriptRoot\ToastShell.cmd" -Destination "$env:WINDIR\ToastShell\ToastShell.cmd" -Force -Confirm:$false
 Copy-Item -Path "$PSScriptRoot\ToastShell.ps1" -Destination "$env:WINDIR\ToastShell\ToastShell.ps1" -Force -Confirm:$false
+
+##*=============================================
+##* Create folders for custom scripts and grant Users access to the User folder, so scripts in user context can write to this folder
+##*=============================================
+
+New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts" -ItemType Directory -Force
+New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts\Administrator" -ItemType Directory -Force
+New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts\User" -ItemType Directory -Force
+# Grant the Users group access to write to the User folder, so if the scripts that use ToastShell are ran in User context any custom scripts can be copied to there
+$Acl = Get-Acl -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts\User"
+$AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("Users","Modify,Write","ContainerInherit,ObjectInherit","None","Allow")
+$Acl.SetAccessRule($AccessRule)
+Set-Acl -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts\User" -AclObject $Acl
