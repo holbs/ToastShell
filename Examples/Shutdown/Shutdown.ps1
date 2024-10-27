@@ -62,8 +62,8 @@ $ToastXml = @"
         </binding>
     </visual>
     <actions>
-        <action content="Snooze" activationType="protocol" arguments="toastshell://Clear-ShutdownCommand" />
-        <action content="Shutdown" activationType="protocol" arguments="toastshell://Push-ShutdownCommand" />
+        <action content="Snooze" activationType="protocol" arguments="toastshell://Clear-ScheduledShutdown" />
+        <action content="Shutdown" activationType="protocol" arguments="toastshell://Push-ScheduledShutdown" />
     </actions>
 </toast>
 "@
