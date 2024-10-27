@@ -9,13 +9,16 @@
 ##*=============================================
 
 $IsAdministrator = Test-IsAdministrator
-If ($IsAdministrator) {
-    Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator" -Filter "*.ps1" | Foreach-Object {
-        . $($_.FullName)
+Switch ($IsAdministrator) {
+    $true {
+        Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator" -Filter "*.ps1" | Foreach-Object {
+            . $_.FullName
+        }
     }
-} Else {
-    Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User" -Filter "*.ps1" | Foreach-Object {
-        . $($_.FullName)
+    $false {
+        Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User" -Filter "*.ps1" | Foreach-Object {
+            . $_.FullName
+        }
     }
 }
 
