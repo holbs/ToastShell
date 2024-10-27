@@ -1,16 +1,21 @@
 ##*=============================================
-##* Import custom scripts from $env:WINDIR\ToastShell\ToastShellCustomScripts, depending on context script is ran
+##* Import ToastShell functions
 ##*=============================================
 
-$IsAdministrator = New-Object Security.Principal.WindowsPrincipal([Security.Principal.WindowsIdentity]::GetCurrent())
-$IsAdministrator = $IsAdministrator.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+. "$env:WINDIR\ToastShell\ToastShellFunctions"
+
+##*=============================================
+##* Import custom functions from $env:WINDIR\ToastShell\ToastShellCustomFunctions, depending on context this script is ran
+##*=============================================
+
+$IsAdministrator = Test-IsAdministrator
 If ($IsAdministrator) {
-    Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts\Administrator" -Filter "*.ps1" | Foreach-Object {
-        . $_.FullName
+    Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator" -Filter "*.ps1" | Foreach-Object {
+        . $($_.FullName)
     }
 } Else {
-    Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomScripts\User" -Filter "*.ps1" | Foreach-Object {
-        . $_.FullName
+    Get-ChildItem -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User" -Filter "*.ps1" | Foreach-Object {
+        . $($_.FullName)
     }
 }
 
