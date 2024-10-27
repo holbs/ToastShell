@@ -46,7 +46,7 @@ New-ItemProperty -Path "HKLM:\SOFTWARE\Classes\toastshell\shell\open\command" -N
 New-Item -Path "$env:WINDIR\ToastShell" -ItemType Directory -Force
 Copy-Item -Path "$PSScriptRoot\ToastShell.cmd" -Destination "$env:WINDIR\ToastShell\ToastShell.cmd" -Force -Confirm:$false
 Copy-Item -Path "$PSScriptRoot\ToastShell.ps1" -Destination "$env:WINDIR\ToastShell\ToastShell.ps1" -Force -Confirm:$false
-Copy-Item -Path "$PSScriptRoot\ToastShellFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShell.ps1" -Force -Confirm:$false
+Copy-Item -Path "$PSScriptRoot\ToastShellFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellFunctions.ps1" -Force -Confirm:$false
 
 ##*=============================================
 ##* Create folders for custom functions and grant Users access to the User folder, so ToastShell in user context can write to this folder
