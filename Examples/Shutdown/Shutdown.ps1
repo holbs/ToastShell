@@ -1,8 +1,8 @@
 <#
 .DESCRIPTION
     Shutdown is used with ToastShell to show a toast notification prompt to the end user that their workstation has a scheduled shutdown in 30 minutes
-    * If the user hits Snooze, the scheduled shutdown job is stopped, by running Stop-Shutdown, which is part of ShutdownCustomScripts.ps1
-    * If the user hits Shutdown, the scheduled shutdown job is stopped, and then shutdown.exe is used to shutdown the workstation, by running Start-Shutdown, which is part of ShutdownCustomScript.ps1
+    * If the user hits Snooze, the scheduled shutdown job is stopped, by running Stop-Shutdown, which is part of ShutdownCustomFunctions.ps1
+    * If the user hits Shutdown, the scheduled shutdown job is stopped, and then shutdown.exe is used to shutdown the workstation, by running Start-Shutdown, which is part of ShutdownCustomFunctions.ps1
     * If the user does nothing, or if they have walked away from their workstation then the shutdown job continues to run for 30 minutes then shutdowns when the timer is reached
 .NOTES
     Author : Aran Holbrook
@@ -13,28 +13,40 @@
 #>
 
 ##*=============================================
-##* Copy any custom scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
+##* Import ToastShell functions
 ##*=============================================
 
-Copy-Item -Path "$PSScriptRoot\ShutdownCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\User\ShutdownCustomScripts.ps1" -Force -Confirm:$false
+. "$env:WINDIR\ToastShell\ToastShellFunctions.ps1"
+
+##*=============================================
+##* Copy any custom functions to $env:WINDIR\ToastShell\ToastShellCustomFunctions here
+##*=============================================
+
+$IsAdministrator = Test-IsAdministrator
+Switch ($IsAdministrator) {
+    $true {
+        Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
+    }
+    $false {
+        Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
+    }
+}
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here
 ##*=============================================
 
-$ShutdownTime = (Get-Date).AddSeconds(1800)
-Start-Job -Name "Scheduled Shutdown" -ScriptBlock {
-    Start-Sleep -Seconds 1800
-    & $env:WINDIR\System32\shutdown.exe /s /t 30
-}
+$ScheduledShutdownTime = (Get-Date).AddSeconds(1800)
+$ScheduledShutdownTime = Get-Date $ScheduledShutdownTime -Format "HH:mm"
+& $env:WINDIR\System32\shutdown.exe /s /t 1800
 
 ##*=============================================
 ##* Build the contents of the notification here
 ##*=============================================
 
 $Title = "Shutdown Notification"
-$Body  = "This workstation will shutdown at $ShutdownTime. Click Snooze to cancel, or Shutdown to shutdown now"
-$Image = "$PSScriptRoot\TSShutdown.png" # Ensure this path is correct. If it's not the notification will not display
+$Body  = "This workstation will shutdown at $ScheduledShutdownTime. Click Snooze to cancel, or Shutdown to shutdown now"
+$Image = "$PSScriptRoot\Shutdown.png" # Ensure this path is correct. If it's not the notification will not display
 
 ##*=============================================
 ##* ToastShell XML content used to display the notification. The arguments can be native PowerShell cmdlets, or can call functions from scripts you place in $env:WINDIR\ToastShell\ToastShellCustomScripts
@@ -50,8 +62,8 @@ $ToastXml = @"
         </binding>
     </visual>
     <actions>
-        <action content="Snooze" activationType="protocol" arguments="toastshell://Stop-Shutdown" />
-        <action content="Shutdown" activationType="protocol" arguments="toastshell://Start-Shutdown" />
+        <action content="Snooze" activationType="protocol" arguments="toastshell://Clear-ShutdownCommand" />
+        <action content="Shutdown" activationType="protocol" arguments="toastshell://Push-ShutdownCommand" />
     </actions>
 </toast>
 "@

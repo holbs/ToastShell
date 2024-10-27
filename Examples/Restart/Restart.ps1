@@ -12,6 +12,12 @@
 #>
 
 ##*=============================================
+##* Import ToastShell functions
+##*=============================================
+
+. "$env:WINDIR\ToastShell\ToastShellFunctions.ps1"
+
+##*=============================================
 ##* Copy any custom function scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
 ##*=============================================
 
@@ -31,7 +37,7 @@ $KernelUpTime = New-TimeSpan -Start $KernelReboot[0].TimeCreated -End (Get-Date)
 
 $Title = "Restart Notification"
 $Body  = "Your computer has not been restarted for $($KernelUpTime.Days) days. Please complete a restart as soon as possible."
-$Image = "$PSScriptRoot\TSRestart.png" # Ensure this path is correct. If it's not the notification will not display
+$Image = "$PSScriptRoot\Restart.png" # Ensure this path is correct. If it's not the notification will not display
 
 ##*=============================================
 ##* ToastShell XML content used to display the notification. The arguments can be native PowerShell cmdlets, or can call functions from scripts you place in $env:WINDIR\ToastShell\ToastShellCustomScripts

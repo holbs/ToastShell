@@ -1,8 +1,8 @@
 <#
 .DESCRIPTION
     Downloads is used with ToastShell to show a toast notification prompt to the end user that they have items in their downloads older than 30 days
-    * If the user hits Review then the downloads folder is opened for the user to review the contents, by running Show-Downloads, which is part of DownloadsCustomScripts.ps1
-    * If the user hits Remove then any item older than 30 days in the downloads folder is deleted, by running Remove-Downloads, which is part of DownloadsCustomScripts.ps1
+    * If the user hits Review then the downloads folder is opened for the user to review the contents, by running Show-Downloads, which is part of DownloadsCustomFunctions.ps1
+    * If the user hits Remove then any item older than 30 days in the downloads folder is deleted, by running Remove-Downloads, which is part of DownloadsCustomFunctions.ps1
 .NOTES
     Author : Aran Holbrook
     BlueSky: https://bsky.app/profile/holbs.bsky.social
@@ -12,10 +12,24 @@
 #>
 
 ##*=============================================
-##* Copy any custom scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
+##* Import ToastShell functions
 ##*=============================================
 
-Copy-Item -Path "$PSScriptRoot\DownloadsCustomScripts.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomScripts\User\DownloadsCustomScripts.ps1" -Force -Confirm:$false
+. "$env:WINDIR\ToastShell\ToastShellFunctions.ps1"
+
+##*=============================================
+##* Copy any custom functions to $env:WINDIR\ToastShell\ToastShellCustomFunctions here
+##*=============================================
+
+$IsAdministrator = Test-IsAdministrator
+Switch ($IsAdministrator) {
+    $true {
+        Copy-Item -Path "$PSScriptRoot\DownloadsCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator\DownloadsCustomFunctions.ps1" -Force -Confirm:$false
+    }
+    $false {
+        Copy-Item -Path "$PSScriptRoot\DownloadsCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User\DownloadsCustomFunctions.ps1" -Force -Confirm:$false
+    }
+}
 
 ##*=============================================
 ##* Build out any data you want to use in the notification here
@@ -31,7 +45,7 @@ $DownloadsContentOlderThan30DaysCount = $DownloadsContentOlderThan30Days.Count
 
 $Title = "Disk Cleanup Required"
 $Body  = "Your downloads folder has $DownloadsContentOlderThan30DaysCount items that are older than 30 days. Do you want to remove these items?"
-$Image = "$PSScriptRoot\TSDownloads.png" # Ensure this path is correct. If it's not the notification will not display
+$Image = "$PSScriptRoot\Downloads.png" # Ensure this path is correct. If it's not the notification will not display
 
 ##*=============================================
 ##* ToastShell XML content used to display the notification. The arguments can be native PowerShell cmdlets, or can call functions from scripts you place in $env:WINDIR\ToastShell\ToastShellCustomScripts
@@ -47,8 +61,8 @@ $ToastXml = @"
         </binding>
     </visual>
     <actions>
-        <action content="Review" activationType="protocol" arguments="toastshell://Show-Downloads" />
-        <action content="Remove" activationType="protocol" arguments="toastshell://Remove-Downloads" />
+        <action content="Review" activationType="protocol" arguments="toastshell://Show-DownloadsFolder" />
+        <action content="Remove" activationType="protocol" arguments="toastshell://Remove-DownloadsItemsOlderThan30Days" />
     </actions>
 </toast>
 "@
