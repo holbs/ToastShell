@@ -2,7 +2,7 @@
 ##* Import ToastShell functions
 ##*=============================================
 
-. "$env:WINDIR\ToastShell\ToastShellFunctions"
+. "$env:WINDIR\ToastShell\ToastShellFunctions.ps1"
 
 ##*=============================================
 ##* Import custom functions from $env:WINDIR\ToastShell\ToastShellCustomFunctions, depending on context this script is ran
