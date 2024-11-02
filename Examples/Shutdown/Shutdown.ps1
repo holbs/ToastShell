@@ -19,16 +19,17 @@
 . "$env:WINDIR\ToastShell\ToastShellFunctions.ps1"
 
 ##*=============================================
-##* Copy any custom functions to $env:WINDIR\ToastShell\ToastShellCustomFunctions here
+##* Copy any custom functions to ToastShellCustomFunctions folders here
 ##*=============================================
 
 $IsAdministrator = Test-IsAdministrator
 Switch ($IsAdministrator) {
     $true {
-        Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
+        Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
     }
     $false {
-        Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
+        New-Item -Path "$env:USERPROFILE\ToastShell\ToastShellCustomFunctions" -ItemType Directory -Force
+        Copy-Item -Path "$PSScriptRoot\ShutdownCustomFunctions.ps1" -Destination "$env:USERPROFILE\ToastShell\ToastShellCustomFunctions\ShutdownCustomFunctions.ps1" -Force -Confirm:$false
     }
 }
 

@@ -18,7 +18,7 @@
 . "$env:WINDIR\ToastShell\ToastShellFunctions.ps1"
 
 ##*=============================================
-##* Copy any custom function scripts to $env:WINDIR\ToastShell\ToastShellCustomScripts here
+##* Copy any custom function scripts to ToastShellCustomScripts folders here
 ##*=============================================
 
 
