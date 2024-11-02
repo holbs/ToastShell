@@ -49,14 +49,7 @@ Copy-Item -Path "$PSScriptRoot\ToastShell.ps1" -Destination "$env:WINDIR\ToastSh
 Copy-Item -Path "$PSScriptRoot\ToastShellFunctions.ps1" -Destination "$env:WINDIR\ToastShell\ToastShellFunctions.ps1" -Force -Confirm:$false
 
 ##*=============================================
-##* Create folders for custom functions and grant Users access to the User folder, so ToastShell in user context can write to this folder
+##* Create folder for custom functions that will run in SYSTEM (as administrator) context
 ##*=============================================
 
 New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions" -ItemType Directory -Force
-New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\Administrator" -ItemType Directory -Force
-New-Item -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User" -ItemType Directory -Force
-# Grant the Users group access to write to the User folder, so if ToastShell is ran in User context any custom functions can be copied to the folder
-$Acl = Get-Acl -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User"
-$AccessRule = New-Object System.Security.AccessControl.FileSystemAccessRule("Users","Modify,Write","ContainerInherit,ObjectInherit","None","Allow")
-$Acl.SetAccessRule($AccessRule)
-Set-Acl -Path "$env:WINDIR\ToastShell\ToastShellCustomFunctions\User" -AclObject $Acl
